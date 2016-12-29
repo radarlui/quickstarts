@@ -31,6 +31,11 @@
       http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
       http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd">
 
+    <!-- Wiring the counter repository -->
+    <bean id="CounterRepository" class="org.apache.cxf.management.counters.CounterRepository">
+      <property name="bus" ref="cxf" />
+    </bean>
+    
     <!--
       The <jaxrs:server/> element sets up our JAX-RS services.  It defines:
       - the server's address, '/crm', relative to the default CXF servlet URI
@@ -64,6 +69,8 @@
             over the default Jettison provider.
           -->
           <entry key="skip.default.json.provider.registration" value="true" />
+          <entry key="bus.jmx.enabled" value="true"/>
+          <entry key="bus.jmx.JMXServiceURL" value="service:jmx:rmi:///jndi/rmi://localhost:9914/jmxrmi" />
         </cxf:properties>
     </cxf:bus>
 
